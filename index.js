@@ -21,7 +21,6 @@ app.get('/', (req, res) => {
     User.find({}).toArray(function(err, data){
             res.status(200).send(data);
         }); */
-        
 });
 
 app.post('/LogIn', (req, res) => {
@@ -46,7 +45,7 @@ app.post('/LogIn', (req, res) => {
     });
 });
 
-app.post('/SignUp', (req, res) => {
+app.post('/SignUpUser', (req, res) => {
     let User = mongoose.connection.db.collection("user");
     let rollId = 2;
     let email = req.body.email;
@@ -132,6 +131,113 @@ app.post('/RemoveExtras', (req,res) =>{
     let query = { "user.email": email, target: key, "plan.services.type": tip};
     let update = { "plan.services.$.extras": naziv};
     Contract.updateOne(query, {$pull: update} , function(err, data){
+        if(err){
+        return res.status(500).send(err);
+        }
+        else{
+        res.status(200).send(JSON.stringify(data));
+        }
+    });
+});
+
+app.get('/AllPlans', (req,res) =>{
+    let Plan = mongoose.connection.db.collection("plan");
+    Plan.find().toArray(function(err,data){
+        if(err){
+            return res.status(500).send();
+        }
+        else{
+            return res.status(200).send(JSON.stringify(data));
+        }
+    });
+});
+
+app.post('/NewPlan', (req,res) =>{
+    let Plan = mongoose.connection.db.collection("plan");
+    let ime = req.body.name;
+    let cena = req.body.price;
+    let usluga = req.body.services; //bolje je na frontu kreirati ovaj objekat jer se tacno zna sta sve ima
+    let newPlan = { name: ime, price: cena, services: usluga };
+    Plan.insert(newPlan, function(err,data){
+        if(err)
+        {
+            return res.status(500).send();
+        }
+        return res.status(200).send(JSON.stringify(data));
+    });
+});
+
+app.post('/EditPlan', (req,res) =>{
+    let Plan = mongoose.connection.db.collection("plan");
+    let staroIme = req.body.oldName;
+    let ime = req.body.name;
+    let cena = req.body.price;
+    let usluga = req.body.services;
+    let query = { name: staroIme};
+    let update = { name:ime, price:cena, services: usluga};
+    Plan.updateOne(query, {$set: update} , function(err, data){
+        if(err){
+        return res.status(500).send(err);
+        }
+        else{
+        res.status(200).send(JSON.stringify(data));
+        }
+    });
+});
+
+
+app.post('/DeletePlan', (req,res) =>{
+    let Plan = mongoose.connection.db.collection("plan");
+    let ime = req.body.name;
+    let query = { name: ime};
+    Plan.deleteOne(query, function(err, data){
+        if(err){
+        return res.status(500).send(err);
+        }
+        else{
+        res.status(200).send(JSON.stringify(data));
+        }
+    });
+});
+
+app.get('/FindUser', (req,res) =>{
+    let User = mongoose.connection.db.collection("user");
+    let email = req.body.email;
+    let query = { email: email };
+    User.findOne(query, function(err, data){
+        if(err){
+            return res.status(500).send();
+        }
+        if(data){
+            return res.status(200).send();
+        }
+        else{
+            return res.status(404).send("User does not exist!");
+        }
+    });
+});
+
+app.post('/NewContract', (req,res) =>{
+    let Contract = mongoose.connection.db.collection("contract");
+    let email = req.body.email;
+    let key = req.body.target;
+    let paket = req.body.plan; //bolje je na frontu kreirati ovaj objekat jer se tacno zna sta sve ima
+    let newContract = { "user.email": email, target: key, plan: paket };
+    Contract.insert(newContract, function(err,data){
+        if(err)
+        {
+            return res.status(500).send();
+        }
+        return res.status(200).send(JSON.stringify(data));
+    });
+});
+
+app.post('/DeleteContract', (req,res) =>{
+    let Contract = mongoose.connection.db.collection("contract");
+    let email = req.body.email;
+    let key = req.body.target;
+    let query = { "user.email": email, target: key };
+    Contract.deleteOne(query, function(err, data){
         if(err){
         return res.status(500).send(err);
         }
