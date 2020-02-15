@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5e45fb5bba332214a05cc235"},"rollID":"0","email":"admin@admin.com","password":"admin"}
+{"_id":{"$oid":"5e45fc50ba332214a05cc237"},"rollID":"1","email":"staff@staff.com","password":"staff"}
+{"_id":{"$oid":"5e474107db06df2544b3c2e0"},"rollID":"2","email":"user@user.com","password":"user","name":"User","surname":"User"}

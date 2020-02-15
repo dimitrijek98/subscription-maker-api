@@ -1,0 +1,5 @@
+{"_id":{"$oid":"5e473d33db06df2544b3c2d5"},"name":"Trio Lite","price":"3000","services":[{"type":"Phone","minutes":"200","extras":[]},{"type":"Internet","speed":"80/5","extras":[]},{"type":"Cable","channels":"120","extras":[]}]}
+{"_id":{"$oid":"5e473d66db06df2544b3c2d6"},"name":"Trio Full","price":"4000","services":[{"type":"Phone","minutes":"500","extras":[]},{"type":"Internet","speed":"100/10","extras":[]},{"type":"Cable","channels":"200","extras":[]}]}
+{"_id":{"$oid":"5e473d7edb06df2544b3c2d7"},"name":"Duo Full","price":"3500","services":[{"type":"Internet","speed":"100/10","extras":[]},{"type":"Cable","channels":"200","extras":[]}]}
+{"_id":{"$oid":"5e473d9adb06df2544b3c2d8"},"name":"Omorika","price":"2000","services":[{"type":"Mobile","minutes":"1000","sms":"1000","internet":"2 GB","extras":[]}]}
+{"_id":{"$oid":"5e473dafdb06df2544b3c2d9"},"name":"Soko","price":"3200","services":[{"type":"Mobile","minutes":"5000","sms":"5000","internet":"5 GB","extras":[]}]}

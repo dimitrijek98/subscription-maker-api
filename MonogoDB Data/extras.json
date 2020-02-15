@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5e45fd2eba332214a05cc239"},"type":"Internet","name":"Static IP"}
+{"_id":{"$oid":"5e45fd52ba332214a05cc23a"},"type":"Phone","name":"Roaming 100"}
+{"_id":{"$oid":"5e45fd6bba332214a05cc23b"},"type":"Cable","name":"HBO.GO"}
+{"_id":{"$oid":"5e45fd7eba332214a05cc23c"},"type":"Mobile","name":"4G 2GB"}
