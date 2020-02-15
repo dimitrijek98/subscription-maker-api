@@ -65,7 +65,6 @@ app.post('/SignUpUser', (req, res) => {
 app.post('/UserContracts', (req,res) =>{
     let Contract = mongoose.connection.db.collection("contract");
     let email = req.body.email;
-    console.log(email);
     let query = { "user.email" : email };
     Contract.find(query).toArray(function(err, data){
         if(err){
