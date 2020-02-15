@@ -65,6 +65,7 @@ app.post('/SignUpUser', (req, res) => {
 app.post('/UserContracts', (req,res) =>{
     let Contract = mongoose.connection.db.collection("contract");
     let email = req.body.email;
+    console.log(email);
     let query = { "user.email" : email };
     Contract.find(query).toArray(function(err, data){
         if(err){
@@ -73,13 +74,13 @@ app.post('/UserContracts', (req,res) =>{
         else{
             return res.status(200).send(JSON.stringify(data));
         }
-    }); 
+    });
 });
 
-app.post('/FindConcrectContract', (req,res) =>{
+app.get('/FindConcrectContract', (req,res) =>{
     let Contract = mongoose.connection.db.collection("contract");
-    let email = req.body.email;
-    let key = req.body.target;
+    let email = req.query.email;
+    let key = req.query.target;
     let query = { "user.email" : email, target: key};
     Contract.findOne(query, function(err, data){
         if(err){
@@ -88,12 +89,12 @@ app.post('/FindConcrectContract', (req,res) =>{
         else{
             return res.status(200).send(JSON.stringify(data));
         }
-    }); 
+    });
 });
 
 app.get('/AllExtras', (req,res) =>{
     let Extras = mongoose.connection.db.collection("extras");
-    let tip = req.body.type;
+    let tip = req.query.type;
     let query = { type: tip };
     Extras.find(query).toArray(function(err,data){
         if(err){
