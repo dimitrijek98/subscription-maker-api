@@ -47,12 +47,12 @@ app.post('/LogIn', (req, res) => {
 
 app.post('/SignUpUser', (req, res) => {
     let User = mongoose.connection.db.collection("user");
-    let rollId = 2;
+    let rollID = "2";
     let email = req.body.email;
     let password = req.body.password;
     let name= req.body.name;
     let surname= req.body.surname;
-    let newUser = { rollId: rollId, email: email, password: password, name:name, surname:surname };
+    let newUser = { rollID: rollID, email: email, password: password, name:name, surname:surname };
     User.insert(newUser, function(err, doc){
         if(err)
         {
@@ -62,7 +62,7 @@ app.post('/SignUpUser', (req, res) => {
     });
 });
 
-app.get('/UserContracts', (req,res) =>{
+app.post('/UserContracts', (req,res) =>{
     let Contract = mongoose.connection.db.collection("contract");
     let email = req.body.email;
     let query = { "user.email" : email };
@@ -200,19 +200,20 @@ app.post('/DeletePlan', (req,res) =>{
     });
 });
 
-app.get('/FindUser', (req,res) =>{
+app.post('/FindUser', (req,res) =>{
     let User = mongoose.connection.db.collection("user");
     let email = req.body.email;
     let query = { email: email };
-    User.findOne(query, function(err, data){
-        if(err){
+    User.findOne(query, function(err, doc){
+        if(err)
+        {
             return res.status(500).send();
         }
-        if(data){
-            return res.status(200).send();
+        if(!doc){
+            return res.status(404).send("User does not exist!");
         }
         else{
-            return res.status(404).send("User does not exist!");
+            return res.status(200).send(JSON.stringify(doc));
         }
     });
 });
@@ -222,7 +223,8 @@ app.post('/NewContract', (req,res) =>{
     let email = req.body.email;
     let key = req.body.target;
     let paket = req.body.plan; //bolje je na frontu kreirati ovaj objekat jer se tacno zna sta sve ima
-    let newContract = { "user.email": email, target: key, plan: paket };
+    let newContract = { user: { email: email}, target: key, plan: paket };
+    console.log(newContract);
     Contract.insert(newContract, function(err,data){
         if(err)
         {
