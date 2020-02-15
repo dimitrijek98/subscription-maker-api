@@ -224,7 +224,6 @@ app.post('/NewContract', (req,res) =>{
     let key = req.body.target;
     let paket = req.body.plan; //bolje je na frontu kreirati ovaj objekat jer se tacno zna sta sve ima
     let newContract = { user: { email: email}, target: key, plan: paket };
-    console.log(newContract);
     Contract.insert(newContract, function(err,data){
         if(err)
         {
