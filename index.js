@@ -76,6 +76,21 @@ app.post('/UserContracts', (req,res) =>{
     }); 
 });
 
+app.post('/FindConcrectContract', (req,res) =>{
+    let Contract = mongoose.connection.db.collection("contract");
+    let email = req.body.email;
+    let key = req.body.target;
+    let query = { "user.email" : email, target: key};
+    Contract.findOne(query, function(err, data){
+        if(err){
+            return res.status(500).send();
+        }
+        else{
+            return res.status(200).send(JSON.stringify(data));
+        }
+    }); 
+});
+
 app.get('/AllExtras', (req,res) =>{
     let Extras = mongoose.connection.db.collection("extras");
     let tip = req.body.type;
